@@ -1,8 +1,8 @@
 class Dpm < Formula
   desc "Declarative, ORM-agnostic Postgres schema migration (diff two databases)"
   homepage "https://github.com/declarative-migrations/declarative-postgres-migrate.rs"
-  url "https://github.com/declarative-migrations/declarative-postgres-migrate.rs/archive/refs/tags/v0.2.1.tar.gz"
-  sha256 "3d89d434a15380261181ac9a0c1506ba07e24c276e175d17e097287d19bd5707"
+  url "https://github.com/declarative-migrations/declarative-postgres-migrate.rs/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "fe8fe24a4c6e8a7b2f4701269ebc8723273a93e716ac2855dada6fd3311628c0"
   license "MIT"
   head "https://github.com/declarative-migrations/declarative-postgres-migrate.rs.git", branch: "main"
 
