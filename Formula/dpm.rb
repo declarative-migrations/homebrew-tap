@@ -1,8 +1,9 @@
 class Dpm < Formula
-  desc "Declarative, ORM-agnostic Postgres schema migration (diff two databases)"
+  desc "Declarative PostgreSQL and CockroachDB schema migration"
   homepage "https://github.com/declarative-migrations/declarative-postgres-migrate.rs"
-  url "https://github.com/declarative-migrations/declarative-postgres-migrate.rs/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "fe8fe24a4c6e8a7b2f4701269ebc8723273a93e716ac2855dada6fd3311628c0"
+  url "https://github.com/declarative-migrations/declarative-postgres-migrate.rs/archive/refs/tags/v0.3.1.tar.gz"
+  version "0.3.1"
+  sha256 "7e09d70f3552c5cf381d2a26ffdad25eb9fdb55b7e37b47862b7f14922bb6f8f"
   license "MIT"
   head "https://github.com/declarative-migrations/declarative-postgres-migrate.rs.git", branch: "main"
 
