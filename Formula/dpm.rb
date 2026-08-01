@@ -1,7 +1,6 @@
 class Dpm < Formula
   desc "Declarative PostgreSQL and CockroachDB schema migration"
   homepage "https://github.com/declarative-migrations/declarative-postgres-migrate.rs"
-  version "0.3.2"
   license "MIT"
 
   on_macos do
