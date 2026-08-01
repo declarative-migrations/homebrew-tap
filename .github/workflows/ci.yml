@@ -1,0 +1,51 @@
+name: ci
+
+# Validate the tap formula: lint/audit it, and prove it actually installs the
+# pinned release binary and passes its `test do` block on macOS + Linux.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: brew style + audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: brew style
+        run: brew style Formula/dpm.rb
+      - name: brew audit (strict, online — checks URLs + checksums)
+        run: |
+          brew tap declarative-migrations/tap "$GITHUB_WORKSPACE"
+          brew audit --strict --online --tap declarative-migrations/tap dpm
+
+  install-test:
+    name: install + test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install the formula from this checkout
+        run: |
+          brew tap declarative-migrations/tap "$GITHUB_WORKSPACE"
+          brew install --formula declarative-migrations/tap/dpm
+      - name: Run the formula test block
+        run: brew test declarative-migrations/tap/dpm
+      - name: Smoke-check the binary
+        run: |
+          dpm version
+          dpm help | grep -qi 'declarative postgres migrate'
