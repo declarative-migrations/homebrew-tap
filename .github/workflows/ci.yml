@@ -22,6 +22,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      # GitHub's ubuntu images ship Homebrew but do not put it on PATH.
+      - name: Put Homebrew on PATH
+        run: test ! -d /home/linuxbrew/.linuxbrew/bin || echo /home/linuxbrew/.linuxbrew/bin >> "$GITHUB_PATH"
       - name: brew style
         run: brew style Formula/dpm.rb
       - name: brew audit (strict, online — checks URLs + checksums)
@@ -39,6 +42,9 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      # macOS has brew on PATH already; ubuntu ships it under /home/linuxbrew.
+      - name: Put Homebrew on PATH
+        run: test ! -d /home/linuxbrew/.linuxbrew/bin || echo /home/linuxbrew/.linuxbrew/bin >> "$GITHUB_PATH"
       - name: Install the formula from this checkout
         run: |
           brew tap declarative-migrations/tap "$GITHUB_WORKSPACE"
