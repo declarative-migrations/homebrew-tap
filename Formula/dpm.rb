@@ -29,7 +29,7 @@ class Dpm < Formula
   end
 
   test do
-    assert_match "dpm", shell_output("#{bin}/dpm version")
+    assert_match "0.3.2", shell_output("#{bin}/dpm version")
     assert_match "declarative postgres migrate", shell_output("#{bin}/dpm help")
   end
 end
