@@ -29,11 +29,16 @@ jobs:
       # GitHub's ubuntu images ship Homebrew but do not put it on PATH.
       - name: Put Homebrew on PATH
         run: test ! -d /home/linuxbrew/.linuxbrew/bin || echo /home/linuxbrew/.linuxbrew/bin >> "$GITHUB_PATH"
+      - name: Check complete, pinned release asset matrix
+        run: ruby scripts/verify_release_matrix.rb
       - name: brew style
         run: brew style Formula/dpm.rb
       - name: brew audit (strict, online — checks URLs + checksums)
         run: |
           brew tap declarative-migrations/tap "$GITHUB_WORKSPACE"
+          # Newer Homebrew requires explicit local trust before formula audit.
+          # Trust is CI-runner-local and applies only to this reviewed checkout.
+          brew trust --formula declarative-migrations/tap/dpm
           brew audit --strict --online --tap declarative-migrations/tap dpm
 
   install-test:
