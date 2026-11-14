@@ -36,6 +36,9 @@ jobs:
       - name: brew audit (strict, online — checks URLs + checksums)
         run: |
           brew tap declarative-migrations/tap "$GITHUB_WORKSPACE"
+          # Newer Homebrew requires explicit local trust before formula audit.
+          # Trust is CI-runner-local and applies only to this reviewed checkout.
+          brew trust --formula declarative-migrations/tap/dpm
           brew audit --strict --online --tap declarative-migrations/tap dpm
 
   install-test:
